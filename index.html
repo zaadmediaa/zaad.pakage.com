@@ -1,0 +1,2359 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaad Media Ads Agency | آژانس دیجیتال مارکتینگ زادمدیا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy-900: #030712;
+            --navy-800: #0a0e1a;
+            --navy-700: #0f172a;
+            --navy-600: #1e293b;
+            --navy-500: #334155;
+            --blue-900: #1e3a8a;
+            --blue-700: #1d4ed8;
+            --blue-600: #2563eb;
+            --blue-500: #3b82f6;
+            --blue-400: #60a5fa;
+            --blue-300: #93c5fd;
+            --white: #ffffff;
+            --gray-100: #f1f5f9;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --red-500: #ef4444;
+            --green-500: #10b981;
+            --gradient-primary: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            --gradient-light: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+            --gradient-gold: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --shadow-blue: 0 20px 60px rgba(37, 99, 235, 0.25);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: var(--navy-900);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--navy-900); }
+        ::-webkit-scrollbar-thumb { background: var(--blue-600); border-radius: 4px; }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .bg-animated::before {
+            content: '';
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.18) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            animation: float 25s ease-in-out infinite;
+        }
+
+        .bg-animated::after {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.1) 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
+            animation: float 30s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(80px, -80px) scale(1.1); }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 50px;
+            transition: all 0.4s ease;
+            background: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(20px);
+            padding: 15px 50px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+            box-shadow: var(--shadow-blue);
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .logo-icon:hover {
+            transform: rotateY(180deg);
+        }
+
+        .logo-text-wrapper {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        .logo-text {
+            background: var(--gradient-light);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 0.3px;
+        }
+
+        .logo-subtitle {
+            font-size: 9.5px;
+            color: var(--gray-400);
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            -webkit-text-fill-color: var(--gray-400);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--gray-300);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-light);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover { color: var(--white); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-cta {
+            padding: 12px 28px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transform-style: preserve-3d;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px) rotateX(10deg);
+            box-shadow: var(--shadow-blue);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 140px 50px 80px;
+            position: relative;
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            border-radius: 50px;
+            font-size: 13px;
+            color: var(--blue-400);
+            margin-bottom: 25px;
+            font-weight: 500;
+            transform-style: preserve-3d;
+        }
+
+        .hero-badge i { font-size: 10px; }
+
+        .hero-content h1 {
+            font-size: clamp(40px, 5vw, 72px);
+            font-weight: 900;
+            line-height: 1.15;
+            margin-bottom: 25px;
+            color: var(--white);
+            transform-style: preserve-3d;
+        }
+
+        .hero-content h1 span {
+            background: var(--gradient-light);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            transform-style: preserve-3d;
+        }
+
+        .hero-content > p {
+            font-size: 18px;
+            color: var(--gray-300);
+            margin-bottom: 15px;
+            transform-style: preserve-3d;
+        }
+
+        .hero-subtitle {
+            font-size: 17px;
+            color: var(--gray-400);
+            margin-bottom: 40px;
+            max-width: 550px;
+            transform-style: preserve-3d;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            padding: 16px 36px;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--shadow-blue);
+        }
+
+        .btn-secondary {
+            padding: 16px 36px;
+            background: transparent;
+            border: 1.5px solid var(--glass-border);
+            border-radius: 50px;
+            color: var(--white);
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--blue-500);
+            background: rgba(37, 99, 235, 0.08);
+            transform: translateY(-3px);
+        }
+
+        .hero-visual {
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .stat-card {
+            padding: 30px 25px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            text-align: center;
+            transform-style: preserve-3d;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px) rotateX(10deg) rotateY(5deg);
+            border-color: var(--blue-600);
+            box-shadow: var(--shadow-blue);
+        }
+
+        .stat-card.big {
+            grid-column: span 2;
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: 900;
+            background: var(--gradient-light);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--gray-400);
+        }
+
+        .section {
+            padding: 100px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 7px 18px;
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid rgba(37, 99, 235, 0.25);
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--blue-400);
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+            transform-style: preserve-3d;
+        }
+
+        .section-title {
+            font-size: clamp(28px, 3.5vw, 46px);
+            font-weight: 900;
+            margin-bottom: 15px;
+            color: var(--white);
+            transform-style: preserve-3d;
+        }
+
+        .section-title span {
+            background: var(--gradient-light);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-desc {
+            font-size: 17px;
+            color: var(--gray-400);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .pricing-card {
+            background: var(--navy-700);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 35px 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.5s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: rgba(37, 99, 235, 0.3);
+            box-shadow: var(--shadow-blue);
+        }
+
+        .pricing-card:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--blue-600);
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.15) 0%, var(--navy-700) 100%);
+            box-shadow: 0 0 40px rgba(37, 99, 235, 0.4);
+        }
+
+        .pricing-card.featured::before {
+            transform: scaleX(1);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 6px 14px;
+            background: var(--gradient-gold);
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--navy-900);
+            letter-spacing: 0.5px;
+            animation: pulse-badge 2s infinite;
+        }
+
+        @keyframes pulse-badge {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pricing-tier {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(37, 99, 235, 0.15);
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--blue-400);
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .pricing-name {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--white);
+        }
+
+        .pricing-desc {
+            font-size: 13px;
+            color: var(--gray-400);
+            margin-bottom: 20px;
+            min-height: 40px;
+        }
+
+        .pricing-price {
+            margin-bottom: 15px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .price-original {
+            font-size: 15px;
+            color: var(--gray-500);
+            text-decoration: line-through;
+            text-decoration-color: var(--red-500);
+            text-decoration-thickness: 2px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .price-current {
+            font-size: 32px;
+            font-weight: 900;
+            background: var(--gradient-light);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .price-period {
+            font-size: 13px;
+            color: var(--gray-400);
+            font-weight: 400;
+            -webkit-text-fill-color: var(--gray-400);
+        }
+
+        .reels-count {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 14px;
+            background: rgba(37, 99, 235, 0.06);
+            border-radius: 14px;
+            border: 1px solid rgba(37, 99, 235, 0.15);
+            transform-style: preserve-3d;
+        }
+
+        .reels-number {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--blue-400);
+            line-height: 1;
+        }
+
+        .reels-label {
+            font-size: 12px;
+            color: var(--gray-400);
+            line-height: 1.4;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .pricing-features li {
+            padding: 9px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13.5px;
+            color: var(--gray-300);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            transition: transform 0.3s ease;
+        }
+
+        .pricing-features li:hover {
+            transform: translateX(-5px);
+        }
+
+        .pricing-features li:last-child { border-bottom: none; }
+
+        .pricing-features li i {
+            color: var(--blue-400);
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .pricing-card .btn-primary {
+            width: 100%;
+            justify-content: center;
+            margin-top: 15px;
+            padding: 14px;
+            font-size: 14px;
+        }
+
+        .comparison-section {
+            padding: 100px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .comparison-wrapper {
+            margin-top: 50px;
+        }
+
+        .quick-compare {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .quick-card {
+            background: var(--navy-700);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .quick-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .quick-card.active {
+            border-color: var(--blue-500);
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.12) 0%, var(--navy-700) 100%);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: var(--shadow-blue);
+        }
+
+        .quick-card.active::before { opacity: 1; }
+
+        .quick-card:hover:not(.active) {
+            border-color: rgba(37, 99, 235, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .quick-tier {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--blue-400);
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+        }
+
+        .quick-reels {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .quick-label {
+            font-size: 11px;
+            color: var(--gray-400);
+            margin-bottom: 10px;
+        }
+
+        .quick-price-original {
+            font-size: 11px;
+            color: var(--gray-500);
+            text-decoration: line-through;
+            text-decoration-color: var(--red-500);
+        }
+
+        .quick-price {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--blue-300);
+        }
+
+        .feature-panel {
+            background: var(--navy-700);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 35px;
+            min-height: 380px;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .feature-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+        }
+
+        .feature-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .feature-header-left h3 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 5px;
+            color: var(--white);
+        }
+
+        .feature-header-left p {
+            font-size: 13px;
+            color: var(--gray-400);
+        }
+
+        .feature-header-right {
+            text-align: left;
+        }
+
+        .feature-price-original {
+            font-size: 13px;
+            color: var(--gray-500);
+            text-decoration: line-through;
+            text-decoration-color: var(--red-500);
+            margin-bottom: 3px;
+        }
+
+        .feature-price-current {
+            font-size: 22px;
+            font-weight: 900;
+            background: var(--gradient-light);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .feature-price-period {
+            font-size: 11px;
+            color: var(--gray-400);
+            -webkit-text-fill-color: var(--gray-400);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px 25px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            background: rgba(37, 99, 235, 0.04);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .feature-item:hover {
+            background: rgba(37, 99, 235, 0.1);
+            transform: translateX(-3px) scale(1.02);
+        }
+
+        .feature-item i {
+            color: var(--blue-400);
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .feature-item span {
+            font-size: 13.5px;
+            color: var(--gray-300);
+        }
+
+        .feature-cta {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .service-card {
+            background: var(--navy-700);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px) rotateX(5deg);
+            border-color: var(--blue-600);
+            box-shadow: var(--shadow-blue);
+        }
+
+        .service-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 20px;
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+        }
+
+        .service-card:hover .service-icon {
+            background: var(--gradient-primary);
+            transform: scale(1.08) rotateY(180deg);
+            border-color: transparent;
+        }
+
+        .service-name {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--white);
+        }
+
+        .service-price-original {
+            font-size: 13px;
+            color: var(--gray-500);
+            text-decoration: line-through;
+            text-decoration-color: var(--red-500);
+            margin-bottom: 4px;
+        }
+
+        .service-price {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--blue-300);
+        }
+
+        .service-note {
+            text-align: center;
+            margin-top: 35px;
+            padding: 18px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            color: var(--gray-400);
+            font-size: 13.5px;
+        }
+
+        .clients-section {
+            padding: 100px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 15px;
+            margin-top: 50px;
+        }
+
+        .client-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 22px 18px;
+            text-align: center;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
+        }
+
+        .client-card:hover {
+            transform: translateY(-5px) rotateY(10deg);
+            border-color: var(--blue-600);
+            box-shadow: var(--shadow-blue);
+        }
+
+        .client-name {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--white);
+        }
+
+        .client-year {
+            font-size: 11px;
+            color: var(--gray-400);
+        }
+
+        .ai-studio {
+            padding: 100px 50px;
+            background: linear-gradient(180deg, transparent 0%, rgba(37, 99, 235, 0.05) 50%, transparent 100%);
+        }
+
+        .ai-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .ai-card {
+            background: var(--navy-700);
+            border: 1px solid var(--glass-border);
+            border-radius: 22px;
+            padding: 35px 30px;
+            text-align: center;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .ai-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.5s ease;
+        }
+
+        .ai-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            border-color: var(--blue-600);
+            box-shadow: var(--shadow-blue);
+        }
+
+        .ai-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .ai-count {
+            font-size: 52px;
+            font-weight: 900;
+            background: var(--gradient-light);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
+            line-height: 1;
+        }
+
+        .ai-count-label {
+            font-size: 14px;
+            color: var(--gray-400);
+            margin-bottom: 20px;
+        }
+
+        .ai-per-image-original {
+            font-size: 12px;
+            color: var(--gray-500);
+            text-decoration: line-through;
+            text-decoration-color: var(--red-500);
+        }
+
+        .ai-per-image {
+            font-size: 14px;
+            color: var(--gray-300);
+            margin-bottom: 15px;
+        }
+
+        .ai-total-original {
+            font-size: 14px;
+            color: var(--gray-500);
+            text-decoration: line-through;
+            text-decoration-color: var(--red-500);
+            margin-bottom: 4px;
+        }
+
+        .ai-total {
+            font-size: 24px;
+            font-weight: 800;
+            background: var(--gradient-light);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 22px;
+            line-height: 1.2;
+        }
+
+        .ai-card .btn-primary {
+            width: 100%;
+            justify-content: center;
+            padding: 13px;
+            font-size: 14px;
+        }
+
+        .faq-section {
+            padding: 100px 50px;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--navy-700);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(37, 99, 235, 0.3);
+            transform: translateX(-3px);
+        }
+
+        .faq-item.active {
+            border-color: var(--blue-600);
+            transform: scale(1.02);
+        }
+
+        .faq-question {
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            color: var(--white);
+        }
+
+        .faq-question:hover { color: var(--blue-400); }
+
+        .faq-question i {
+            transition: transform 0.4s ease;
+            color: var(--blue-400);
+            flex-shrink: 0;
+            margin-right: 15px;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding: 0 25px 20px;
+        }
+
+        .faq-answer p {
+            color: var(--gray-400);
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        .contact-section {
+            padding: 100px 50px;
+            background: linear-gradient(180deg, transparent 0%, rgba(37, 99, 235, 0.08) 50%, transparent 100%);
+        }
+
+        .contact-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .contact-card {
+            background: var(--navy-700);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 35px 30px;
+            text-align: center;
+            transition: all 0.5s ease;
+            text-decoration: none;
+            display: block;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.5s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            border-color: var(--blue-600);
+            box-shadow: var(--shadow-blue);
+        }
+
+        .contact-card:hover::before { transform: scaleX(1); }
+
+        .contact-icon-wrapper {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: white;
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+        }
+
+        .contact-card:hover .contact-icon-wrapper {
+            transform: scale(1.1) rotateY(180deg);
+        }
+
+        .contact-card.instagram:hover .contact-icon-wrapper {
+            background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        .contact-card.telegram:hover .contact-icon-wrapper {
+            background: linear-gradient(135deg, #0088cc 0%, #00aaff 100%);
+        }
+
+        .contact-card.phone:hover .contact-icon-wrapper {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .contact-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .contact-value {
+            font-size: 16px;
+            color: var(--blue-300);
+            margin-bottom: 5px;
+            direction: ltr;
+            font-weight: 600;
+        }
+
+        .contact-label {
+            font-size: 12px;
+            color: var(--gray-400);
+        }
+
+        .cta-section {
+            padding: 100px 50px;
+            text-align: center;
+        }
+
+        .cta-box {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 70px 50px;
+            background: linear-gradient(135deg, var(--navy-700) 0%, var(--navy-600) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(37, 99, 235, 0.15), transparent 30%);
+            animation: rotate 12s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .cta-box > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-title {
+            font-size: 30px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+
+        .cta-desc {
+            font-size: 16px;
+            color: var(--gray-400);
+            margin-bottom: 35px;
+        }
+
+        .fab-container {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 12px;
+        }
+
+        .fab {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .fab.phone {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            animation: pulse 2s infinite;
+        }
+
+        .fab.instagram {
+            background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        .fab.telegram {
+            background: linear-gradient(135deg, #0088cc 0%, #00aaff 100%);
+        }
+
+        .fab:hover {
+            transform: scale(1.15) rotateY(180deg);
+        }
+
+        .fab::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            right: 70px;
+            background: var(--navy-700);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            border: 1px solid var(--glass-border);
+        }
+
+        .fab:hover::after { opacity: 1; }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .footer {
+            padding: 60px 50px 30px;
+            border-top: 1px solid var(--glass-border);
+            background: var(--navy-800);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-top {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .footer-logo-icon:hover {
+            transform: rotateY(180deg);
+        }
+
+        .footer-logo-text {
+            text-align: right;
+        }
+
+        .footer-logo-name {
+            font-size: 20px;
+            font-weight: 900;
+            background: var(--gradient-light);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-logo-sub {
+            font-size: 10px;
+            color: var(--gray-500);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            -webkit-text-fill-color: var(--gray-500);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-social a {
+            width: 44px;
+            height: 44px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-300);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            transform-style: preserve-3d;
+        }
+
+        .footer-social a:hover {
+            background: var(--gradient-primary);
+            color: white;
+            transform: translateY(-3px) rotateY(180deg);
+            border-color: transparent;
+        }
+
+        .footer-social a.instagram:hover {
+            background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        .footer-social a.telegram:hover {
+            background: linear-gradient(135deg, #0088cc 0%, #00aaff 100%);
+        }
+
+        .footer-contact-info {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 25px 0;
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 25px;
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--gray-300);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-contact-item:hover { color: var(--blue-400); }
+
+        .footer-contact-item i {
+            color: var(--blue-400);
+            font-size: 16px;
+        }
+
+        .footer-text {
+            color: var(--gray-500);
+            font-size: 13px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--navy-700);
+            border: 1px solid var(--blue-600);
+            padding: 14px 28px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast i { color: var(--blue-400); }
+
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 50px;
+            }
+            .hero-subtitle { margin: 0 auto 40px; }
+            .hero-buttons { justify-content: center; }
+            .hero-stats { max-width: 500px; margin: 0 auto; }
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 15px 20px; }
+            .nav-links { display: none; }
+            .logo-text { font-size: 15px; }
+            .logo-subtitle { font-size: 8px; }
+            .logo-icon { width: 38px; height: 38px; font-size: 16px; }
+            .section, .hero, .comparison-section, .clients-section, .ai-studio, .faq-section, .cta-section, .contact-section, .footer {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            .hero { padding-top: 110px; }
+            .hero-stats { grid-template-columns: 1fr; }
+            .stat-card.big { grid-column: span 1; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .quick-compare { grid-template-columns: repeat(2, 1fr); }
+            .feature-panel { padding: 25px 20px; }
+            .feature-header { flex-direction: column; align-items: flex-start; }
+            .feature-header-right { text-align: right; width: 100%; }
+            .fab-container { bottom: 20px; left: 20px; }
+            .fab { width: 50px; height: 50px; font-size: 20px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 { font-size: 34px; }
+            .hero-buttons { flex-direction: column; width: 100%; }
+            .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+            .footer-contact-info { flex-direction: column; gap: 15px; }
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .particles {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--blue-500);
+            border-radius: 50%;
+            opacity: 0.25;
+            animation: particle-float 20s linear infinite;
+        }
+
+        @keyframes particle-float {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    <div class="bg-animated"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="fab-container">
+        <a href="tel:09991248434" class="fab phone" data-tooltip="تماس: 09991248434">
+            <i class="fas fa-phone"></i>
+        </a>
+        <a href="https://www.instagram.com/zaadmediaa" target="_blank" class="fab instagram" data-tooltip="اینستاگرام">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://t.me/zaaadmedia" target="_blank" class="fab telegram" data-tooltip="تلگرام">
+            <i class="fab fa-telegram-plane"></i>
+        </a>
+    </div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+                <div class="logo-text-wrapper">
+                    <span class="logo-text">Zaad Media Ads Agency</span>
+                    <span class="logo-subtitle">Digital Marketing Agency</span>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#packages">پکیج‌ها</a></li>
+                <li><a href="#comparison">مقایسه</a></li>
+                <li><a href="#services">خدمات پروژه‌ای</a></li>
+                <li><a href="#clients">مشتریان</a></li>
+                <li><a href="#ai-studio">AI Studio</a></li>
+                <li><a href="#contact">تماس</a></li>
+            </ul>
+            <a href="tel:09991248434" class="nav-cta">
+                <i class="fas fa-phone"></i>
+                مشاوره رایگان
+            </a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content fade-up">
+                <div class="hero-badge">
+                    <i class="fas fa-circle"></i>
+                    آژانس دیجیتال مارکتینگ زادمدیا
+                </div>
+                <h1>رشد برند، <span>اتفاقی نیست.</span></h1>
+                <p>استراتژی می‌خواهد. محتوا می‌خواهد. اجرا می‌خواهد.</p>
+                <p class="hero-subtitle">زادمدیا با ترکیب استراتژی، تولید محتوا و دیجیتال مارکتینگ، مسیر رشد برند شما را طراحی و اجرا می‌کند.</p>
+                <div class="hero-buttons">
+                    <a href="#packages" class="btn-primary">
+                        <i class="fas fa-rocket"></i>
+                        مشاهده پکیج‌ها
+                    </a>
+                    <a href="tel:09991248434" class="btn-secondary">
+                        <i class="fas fa-headset"></i>
+                        مشاوره: 09991248434
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-stats">
+                    <div class="stat-card big fade-up">
+                        <div class="stat-number" data-target="120">0</div>
+                        <div class="stat-label">پروژه موفق</div>
+                    </div>
+                    <div class="stat-card fade-up" style="transition-delay: 0.1s;">
+                        <div class="stat-number" data-target="45">0</div>
+                        <div class="stat-label">برند فعال</div>
+                    </div>
+                    <div class="stat-card fade-up" style="transition-delay: 0.2s;">
+                        <div class="stat-number" data-target="8">0</div>
+                        <div class="stat-label">سال تجربه</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="packages">
+        <div class="section-header fade-up">
+            <span class="section-tag">پکیج‌های همکاری</span>
+            <h2 class="section-title">برای هر مرحله از رشد، <span>یک مسیر داریم.</span></h2>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="pricing-card fade-up tilt-card">
+                <span class="pricing-tier">START</span>
+                <h3 class="pricing-name">شروع حرفه‌ای</h3>
+                <div class="reels-count">
+                    <span class="reels-number">۸</span>
+                    <span class="reels-label">ریلز/کلیپ<br>در ماه</span>
+                </div>
+                <p class="pricing-desc">بدون مدیریت پیج — مناسب کسب‌وکارهایی که خودشان ادمین دارند.</p>
+                <div class="pricing-price">
+                    <span class="price-original">۲۹,۷۹۲,۰۰۰</span>
+                    <span class="price-current">۲۱,۲۸۰,۰۰۰</span>
+                    <span class="price-period"> تومان / ماه</span>
+                </div>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check-circle"></i> تولید ۸ عدد ریلز/کلیپ</li>
+                    <li><i class="fas fa-check-circle"></i> استراتژی محتوا</li>
+                    <li><i class="fas fa-check-circle"></i> تقویم محتوایی</li>
+                    <li><i class="fas fa-check-circle"></i> ایده‌پردازی و سناریونویسی</li>
+                    <li><i class="fas fa-check-circle"></i> تولید ویدیو، کاور و کپشن</li>
+                    <li><i class="fas fa-check-circle"></i> هشتگ و برنامه اجرایی</li>
+                    <li><i class="fas fa-check-circle"></i> مشاوره و آنالیز ماهانه</li>
+                </ul>
+                <a href="tel:09991248434" class="btn-primary">انتخاب پکیج</a>
+            </div>
+
+            <div class="pricing-card fade-up tilt-card" style="transition-delay: 0.1s;">
+                <span class="pricing-tier">GROWTH</span>
+                <h3 class="pricing-name">رشد مستمر</h3>
+                <div class="reels-count">
+                    <span class="reels-number">۱۲</span>
+                    <span class="reels-label">ریلز/کلیپ<br>در ماه</span>
+                </div>
+                <p class="pricing-desc">مدیریت کامل پیج به همراه تمام امکانات START.</p>
+                <div class="pricing-price">
+                    <span class="price-original">۵۴,۸۸۰,۰۰۰</span>
+                    <span class="price-current">۳۹,۲۰۰,۰۰۰</span>
+                    <span class="price-period"> تومان / ماه</span>
+                </div>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check-circle"></i> تولید ۱۲ عدد ریلز/کلیپ</li>
+                    <li><i class="fas fa-check-circle"></i> تمام امکانات START</li>
+                    <li><i class="fas fa-check-circle"></i> مدیریت کامل پیج</li>
+                    <li><i class="fas fa-check-circle"></i> انتشار محتوا</li>
+                    <li><i class="fas fa-check-circle"></i> مدیریت دایرکت و کامنت</li>
+                    <li><i class="fas fa-check-circle"></i> استراتژی رشد</li>
+                    <li><i class="fas fa-check-circle"></i> آنالیز و کمپین مناسبتی</li>
+                    <li><i class="fas fa-check-circle"></i> برنامه‌ریزی فروش</li>
+                </ul>
+                <a href="tel:09991248434" class="btn-primary">انتخاب پکیج</a>
+            </div>
+
+            <div class="pricing-card featured fade-up tilt-card" style="transition-delay: 0.2s;">
+                <span class="pricing-badge">پیشنهاد زاد</span>
+                <span class="pricing-tier">PRO</span>
+                <h3 class="pricing-name">مدیریت و رشد حرفه‌ای</h3>
+                <div class="reels-count">
+                    <span class="reels-number">۱۶</span>
+                    <span class="reels-label">ریلز/کلیپ<br>در ماه</span>
+                </div>
+                <p class="pricing-desc">پیشنهاد ویژه زادمدیا — تمام امکانات GROWTH به‌همراه ابزارهای پیشرفته.</p>
+                <div class="pricing-price">
+                    <span class="price-original">۷۶,۸۳۲,۰۰۰</span>
+                    <span class="price-current">۵۴,۸۸۰,۰۰۰</span>
+                    <span class="price-period"> تومان / ماه</span>
+                </div>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check-circle"></i> تولید ۱۶ عدد ریلز/کلیپ</li>
+                    <li><i class="fas fa-check-circle"></i> تمام امکانات GROWTH</li>
+                    <li><i class="fas fa-check-circle"></i> استراتژی پیشرفته</li>
+                    <li><i class="fas fa-check-circle"></i> آنالیز هفتگی</li>
+                    <li><i class="fas fa-check-circle"></i> کمپین فروش</li>
+                    <li><i class="fas fa-check-circle"></i> تولید محتوای خلاقانه</li>
+                    <li><i class="fas fa-check-circle"></i> AI Content</li>
+                    <li><i class="fas fa-check-circle"></i> گزارش عملکرد و استراتژی رشد برند</li>
+                </ul>
+                <a href="tel:09991248434" class="btn-primary">انتخاب پکیج</a>
+            </div>
+
+            <div class="pricing-card fade-up tilt-card" style="transition-delay: 0.3s;">
+                <span class="pricing-tier">SCALE</span>
+                <h3 class="pricing-name">توسعه برند</h3>
+                <div class="reels-count">
+                    <span class="reels-number">۲۰</span>
+                    <span class="reels-label">ریلز/کلیپ<br>در ماه</span>
+                </div>
+                <p class="pricing-desc">تمام امکانات PRO به‌همراه مدیریت جامع و توسعه برند.</p>
+                <div class="pricing-price">
+                    <span class="price-original">۹۷,۲۱۶,۰۰۰</span>
+                    <span class="price-current">۶۹,۴۴۰,۰۰۰</span>
+                    <span class="price-period"> تومان / ماه</span>
+                </div>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check-circle"></i> تولید ۲۰ عدد ریلز/کلیپ</li>
+                    <li><i class="fas fa-check-circle"></i> تمام امکانات PRO</li>
+                    <li><i class="fas fa-check-circle"></i> مدیریت جامع پیج</li>
+                    <li><i class="fas fa-check-circle"></i> استراتژی اختصاصی برند</li>
+                    <li><i class="fas fa-check-circle"></i> کمپین‌های فروش و تبلیغاتی</li>
+                    <li><i class="fas fa-check-circle"></i> تحلیل مستمر</li>
+                    <li><i class="fas fa-check-circle"></i> تولید محتوای پیشرفته و AI Content</li>
+                    <li><i class="fas fa-check-circle"></i> مشاوره بازاریابی و فروش</li>
+                    <li><i class="fas fa-check-circle"></i> برنامه توسعه برند</li>
+                </ul>
+                <a href="tel:09991248434" class="btn-primary">انتخاب پکیج</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="comparison-section" id="comparison">
+        <div class="section-header fade-up">
+            <span class="section-tag">مقایسه پکیج‌ها</span>
+            <h2 class="section-title">همه‌چیز <span>در یک نگاه</span></h2>
+            <p class="section-desc">یک پکیج را انتخاب کنید تا تمام ویژگی‌ها و جزئیات آن را مشاهده کنید</p>
+        </div>
+
+        <div class="comparison-wrapper fade-up">
+            <div class="quick-compare">
+                <div class="quick-card active" data-target="start">
+                    <div class="quick-tier">START</div>
+                    <div class="quick-reels">۸</div>
+                    <div class="quick-label">ریلز در ماه</div>
+                    <div class="quick-price-original">۲۹,۷۹۲,۰۰۰</div>
+                    <div class="quick-price">۲۱,۲۸۰,۰۰۰ ت</div>
+                </div>
+                <div class="quick-card" data-target="growth">
+                    <div class="quick-tier">GROWTH</div>
+                    <div class="quick-reels">۱۲</div>
+                    <div class="quick-label">ریلز در ماه</div>
+                    <div class="quick-price-original">۵۴,۸۸۰,۰۰۰</div>
+                    <div class="quick-price">۳۹,۲۰۰,۰۰۰ ت</div>
+                </div>
+                <div class="quick-card" data-target="pro">
+                    <div class="quick-tier">PRO</div>
+                    <div class="quick-reels">۱۶</div>
+                    <div class="quick-label">ریلز در ماه</div>
+                    <div class="quick-price-original">۷۶,۸۳۲,۰۰۰</div>
+                    <div class="quick-price">۵۴,۸۸۰,۰۰۰ ت</div>
+                </div>
+                <div class="quick-card" data-target="scale">
+                    <div class="quick-tier">SCALE</div>
+                    <div class="quick-reels">۲۰</div>
+                    <div class="quick-label">ریلز در ماه</div>
+                    <div class="quick-price-original">۹۷,۲۱۶,۰۰۰</div>
+                    <div class="quick-price">۶۹,۴۴۰,۰۰۰ ت</div>
+                </div>
+            </div>
+
+            <div class="feature-panel">
+                <div class="tab-pane active" id="start">
+                    <div class="feature-header">
+                        <div class="feature-header-left">
+                            <h3>پکیج START — شروع حرفه‌ای</h3>
+                            <p>مناسب کسب‌وکارهایی که ادمین داخلی دارند</p>
+                        </div>
+                        <div class="feature-header-right">
+                            <div class="feature-price-original">۲۹,۷۹۲,۰۰۰</div>
+                            <div class="feature-price-current">۲۱,۲۸۰,۰۰۰</div>
+                            <div class="feature-price-period">تومان / ماه</div>
+                        </div>
+                    </div>
+                    <div class="feature-grid">
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>تولید ۸ عدد ریلز/کلیپ</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>استراتژی محتوا</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>تقویم محتوایی</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>ایده‌پردازی و سناریو</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>تولید ویدیو، کاور و کپشن</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>هشتگ و برنامه اجرایی</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>مشاوره و آنالیز ماهانه</span></div>
+                        <div class="feature-item"><i class="fas fa-times-circle" style="color: var(--red-500);"></i><span style="color: var(--gray-500);">بدون مدیریت پیج</span></div>
+                        <div class="feature-item"><i class="fas fa-times-circle" style="color: var(--red-500);"></i><span style="color: var(--gray-500);">بدون AI Content</span></div>
+                        <div class="feature-item"><i class="fas fa-times-circle" style="color: var(--red-500);"></i><span style="color: var(--gray-500);">بدون کمپین فروش</span></div>
+                    </div>
+                    <div class="feature-cta">
+                        <a href="tel:09991248434" class="btn-primary"><i class="fas fa-phone"></i> انتخاب پکیج START</a>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="growth">
+                    <div class="feature-header">
+                        <div class="feature-header-left">
+                            <h3>پکیج GROWTH — رشد مستمر</h3>
+                            <p>مدیریت کامل پیج به همراه تمام امکانات START</p>
+                        </div>
+                        <div class="feature-header-right">
+                            <div class="feature-price-original">۵۴,۸۸۰,۰۰۰</div>
+                            <div class="feature-price-current">۳۹,۲۰۰,۰۰۰</div>
+                            <div class="feature-price-period">تومان / ماه</div>
+                        </div>
+                    </div>
+                    <div class="feature-grid">
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>تولید ۱۲ عدد ریلز/کلیپ</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>تمام امکانات START</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>مدیریت کامل پیج</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>انتشار محتوا</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>مدیریت دایرکت و کامنت</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>استراتژی رشد</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>آنالیز و کمپین مناسبتی</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>برنامه‌ریزی فروش</span></div>
+                        <div class="feature-item"><i class="fas fa-times-circle" style="color: var(--red-500);"></i><span style="color: var(--gray-500);">بدون AI Content</span></div>
+                        <div class="feature-item"><i class="fas fa-times-circle" style="color: var(--red-500);"></i><span style="color: var(--gray-500);">بدون کمپین فروش</span></div>
+                    </div>
+                    <div class="feature-cta">
+                        <a href="tel:09991248434" class="btn-primary"><i class="fas fa-phone"></i> انتخاب پکیج GROWTH</a>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="pro">
+                    <div class="feature-header">
+                        <div class="feature-header-left">
+                            <h3>پکیج PRO — مدیریت و رشد حرفه‌ای <span style="color: var(--blue-400); font-size: 13px;">⭐ پیشنهاد زاد</span></h3>
+                            <p>تمام امکانات GROWTH به‌همراه ابزارهای پیشرفته</p>
+                        </div>
+                        <div class="feature-header-right">
+                            <div class="feature-price-original">۷۶,۸۳۲,۰۰۰</div>
+                            <div class="feature-price-current">۵۴,۸۸۰,۰۰۰</div>
+                            <div class="feature-price-period">تومان / ماه</div>
+                        </div>
+                    </div>
+                    <div class="feature-grid">
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>تولید ۱۶ عدد ریلز/کلیپ</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>تمام امکانات GROWTH</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>استراتژی پیشرفته</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>آنالیز هفتگی</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>کمپین فروش</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>تولید محتوای خلاقانه</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>AI Content</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>گزارش عملکرد و رشد برند</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>استراتژی رشد برند</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>مشاوره اختصاصی</span></div>
+                    </div>
+                    <div class="feature-cta">
+                        <a href="tel:09991248434" class="btn-primary"><i class="fas fa-phone"></i> انتخاب پکیج PRO</a>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="scale">
+                    <div class="feature-header">
+                        <div class="feature-header-left">
+                            <h3>پکیج SCALE — توسعه برند</h3>
+                            <p>تمام امکانات PRO به‌همراه مدیریت جامع و توسعه برند</p>
+                        </div>
+                        <div class="feature-header-right">
+                            <div class="feature-price-original">۹۷,۲۱۶,۰۰۰</div>
+                            <div class="feature-price-current">۶۹,۴۴۰,۰۰۰</div>
+                            <div class="feature-price-period">تومان / ماه</div>
+                        </div>
+                    </div>
+                    <div class="feature-grid">
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>تولید ۲۰ عدد ریلز/کلیپ</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>تمام امکانات PRO</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>مدیریت جامع پیج</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>استراتژی اختصاصی برند</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>کمپین‌های فروش و تبلیغاتی</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>تحلیل مستمر</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>تولید محتوای پیشرفته و AI Content</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>مشاوره بازاریابی و فروش</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>برنامه توسعه برند</span></div>
+                        <div class="feature-item"><i class="fas fa-check-circle"></i><span>پشتیبانی اختصاصی</span></div>
+                    </div>
+                    <div class="feature-cta">
+                        <a href="tel:09991248434" class="btn-primary"><i class="fas fa-phone"></i> انتخاب پکیج SCALE</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="services">
+        <div class="section-header fade-up">
+            <span class="section-tag">خدمات پروژه‌ای</span>
+            <h2 class="section-title">فقط یک پروژه <span>لازم دارید؟</span></h2>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card fade-up tilt-card">
+                <div class="service-icon">🎬</div>
+                <h3 class="service-name">تک ویدیو</h3>
+                <div class="service-price-original">از ۳,۱۳۶,۰۰۰ تومان</div>
+                <div class="service-price">از ۲,۲۴۰,۰۰۰ تومان</div>
+            </div>
+
+            <div class="service-card fade-up tilt-card" style="transition-delay: 0.1s;">
+                <div class="service-icon">✂️</div>
+                <h3 class="service-name">تدوین ویدیو</h3>
+                <div class="service-price-original">از ۱,۵۶۸,۰۰۰ تومان</div>
+                <div class="service-price">از ۱,۱۲۰,۰۰۰ تومان</div>
+            </div>
+
+            <div class="service-card fade-up tilt-card" style="transition-delay: 0.2s;">
+                <div class="service-icon">📝</div>
+                <h3 class="service-name">سناریونویسی</h3>
+                <div class="service-price-original">از ۱,۱۷۶,۰۰۰ تومان</div>
+                <div class="service-price">از ۸۴۰,۰۰۰ تومان</div>
+            </div>
+
+            <div class="service-card fade-up tilt-card" style="transition-delay: 0.3s;">
+                <div class="service-icon">🎨</div>
+                <h3 class="service-name">طراحی گرافیک</h3>
+                <div class="service-price-original">از ۱,۱۷۶,۰۰۰ تومان</div>
+                <div class="service-price">از ۸۴۰,۰۰۰ تومان</div>
+            </div>
+
+            <div class="service-card fade-up tilt-card" style="transition-delay: 0.4s;">
+                <div class="service-icon">📸</div>
+                <h3 class="service-name">پروژه عکاسی</h3>
+                <div class="service-price-original">از ۵,۴۸۸,۰۰۰ تومان</div>
+                <div class="service-price">از ۳,۹۲۰,۰۰۰ تومان</div>
+            </div>
+        </div>
+
+        <div class="service-note fade-up">
+            قیمت نهایی بر اساس پیچیدگی پروژه تعیین می‌شود. برای استعلام با ما تماس بگیرید.
+        </div>
+    </section>
+
+    <section class="clients-section" id="clients">
+        <div class="section-header fade-up">
+            <span class="section-tag">مشتریان ما</span>
+            <h2 class="section-title">برندهایی که با زادمدیا <span>رشد کردند</span></h2>
+        </div>
+
+        <div class="clients-grid">
+            <div class="client-card fade-up tilt-card"><div class="client-name">Almas Kave Carpet</div><div class="client-year">2015</div></div>
+            <div class="client-card fade-up tilt-card" style="transition-delay: 0.03s;"><div class="client-name">EMG</div><div class="client-year">2016-17</div></div>
+            <div class="client-card fade-up tilt-card" style="transition-delay: 0.06s;"><div class="client-name">Kesri</div><div class="client-year">2015-16</div></div>
+            <div class="client-card fade-up tilt-card" style="transition-delay: 0.09s;"><div class="client-name">Aghigh Tile</div><div class="client-year">2017-2021</div></div>
+            <div class="client-card fade-up tilt-card" style="transition-delay: 0.12s;"><div class="client-name">Hacoupian</div><div class="client-year">2020</div></div>
+            <div class="client-card fade-up tilt-card" style="transition-delay: 0.15s;"><div class="client-name">Mana Master</div><div class="client-year">2018-2023</div></div>
+            <div class="client-card fade-up tilt-card" style="transition-delay: 0.18s;"><div class="client-name">Manamine</div><div class="client-year">2022-2023</div></div>
+            <div class="client-card fade-up tilt-card" style="transition-delay: 0.21s;"><div class="client-name">Aria Stone</div><div class="client-year">2023-2025</div></div>
+            <div class="client-card fade-up tilt-card" style="transition-delay: 0.24s;"><div class="client-name">Choopan</div><div class="client-year">2019-2020</div></div>
+            <div class="client-card fade-up tilt-card" style="transition-delay: 0.27s;"><div class="client-name">Nasajit</div><div class="client-year">2017-2020</div></div>
+            <div class="client-card fade-up tilt-card" style="transition-delay: 0.3s;"><div class="client-name">Yazd Polymer</div><div class="client-year">2020</div></div>
+            <div class="client-card fade-up tilt-card" style="transition-delay: 0.33s;"><div class="client-name">Golkiki</div><div class="client-year">2025</div></div>
+            <div class="client-card fade-up tilt-card" style="transition-delay: 0.36s;"><div class="client-name">Lilian</div><div class="client-year">2019-2020</div></div>
+            <div class="client-card fade-up tilt-card" style="transition-delay: 0.39s;"><div class="client-name">Aryan Pergas</div><div class="client-year">2020</div></div>
+            <div class="client-card fade-up tilt-card" style="transition-delay: 0.42s;"><div class="client-name">Hamta</div><div class="client-year">2023</div></div>
+            <div class="client-card fade-up tilt-card" style="transition-delay: 0.45s;"><div class="client-name">Yazdino</div><div class="client-year">2019</div></div>
+            <div class="client-card fade-up tilt-card" style="transition-delay: 0.48s;"><div class="client-name">Zanis</div><div class="client-year">2025</div></div>
+            <div class="client-card fade-up tilt-card" style="transition-delay: 0.51s;"><div class="client-name">Pandora</div><div class="client-year">2025</div></div>
+        </div>
+    </section>
+
+    <section class="ai-studio" id="ai-studio">
+        <div class="ai-container">
+            <div class="section-header fade-up">
+                <span class="section-tag">ZAAD AI PRODUCT STUDIO</span>
+                <h2 class="section-title">محصول شما، در هر فضایی که <span>تصور کنید.</span></h2>
+                <p class="section-desc">تولید تصاویر تبلیغاتی حرفه‌ای محصولات صنعتی با استفاده از هوش مصنوعی.</p>
+            </div>
+
+            <div class="ai-grid">
+                <div class="ai-card fade-up tilt-card">
+                    <div class="ai-count">۲۰</div>
+                    <div class="ai-count-label">تصویر</div>
+                    <div class="ai-per-image-original">۷۰۵,۶۰۰ تومان / تصویر</div>
+                    <div class="ai-per-image">۵۰۴,۰۰۰ تومان / تصویر</div>
+                    <div class="ai-total-original">۱۴,۱۱۲,۰۰۰ تومان</div>
+                    <div class="ai-total">۱۰,۰۸۰,۰۰۰ تومان</div>
+                    <a href="tel:09991248434" class="btn-primary">سفارش</a>
+                </div>
+
+                <div class="ai-card fade-up tilt-card" style="transition-delay: 0.1s;">
+                    <div class="ai-count">۳۰</div>
+                    <div class="ai-count-label">تصویر</div>
+                    <div class="ai-per-image-original">۶۲۷,۲۰۰ تومان / تصویر</div>
+                    <div class="ai-per-image">۴۴۸,۰۰۰ تومان / تصویر</div>
+                    <div class="ai-total-original">۱۸,۸۱۶,۰۰۰ تومان</div>
+                    <div class="ai-total">۱۳,۴۴۰,۰۰۰ تومان</div>
+                    <a href="tel:09991248434" class="btn-primary">سفارش</a>
+                </div>
+
+                <div class="ai-card fade-up tilt-card" style="transition-delay: 0.2s;">
+                    <div class="ai-count">۵۰</div>
+                    <div class="ai-count-label">تصویر</div>
+                    <div class="ai-per-image-original">۴۷۰,۴۰۰ تومان / تصویر</div>
+                    <div class="ai-per-image">۳۳۶,۰۰۰ تومان / تصویر</div>
+                    <div class="ai-total-original">۲۳,۵۲۰,۰۰۰ تومان</div>
+                    <div class="ai-total">۱۶,۸۰۰,۰۰۰ تومان</div>
+                    <a href="tel:09991248434" class="btn-primary">سفارش</a>
+                </div>
+            </div>
+
+            <div class="service-note fade-up" style="margin-top: 30px;">
+                <strong>بالای ۵۰ تصویر</strong> — قیمت‌گذاری اختصاصی بر اساس نیاز پروژه
+                <br>
+                <a href="tel:09991248434" class="btn-primary" style="margin-top: 15px; display: inline-flex;">دریافت پیشنهاد اختصاصی</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section" id="faq">
+        <div class="section-header fade-up">
+            <span class="section-tag">سوالات متداول</span>
+            <h2 class="section-title">پاسخ به <span>پرسش‌های شما</span></h2>
+        </div>
+
+        <div class="faq-list">
+            <div class="faq-item fade-up">
+                <div class="faq-question">
+                    مدت قرارداد چگونه است؟
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>پکیج‌های ماهانه با قرارداد حداقل ۳ ماهه ارائه می‌شوند. امکان تمدید ماهانه پس از دوره اولیه وجود دارد.</p>
+                </div>
+            </div>
+
+            <div class="faq-item fade-up" style="transition-delay: 0.1s;">
+                <div class="faq-question">
+                    نحوه شروع همکاری چگونه است؟
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>پس از جلسه مشاوره رایگان، نیازسنجی انجام می‌شود، پکیج مناسب پیشنهاد می‌گردد و پس از عقد قرارداد، فرآیند آنبوردینگ آغاز می‌شود.</p>
+                </div>
+            </div>
+
+            <div class="faq-item fade-up" style="transition-delay: 0.2s;">
+                <div class="faq-question">
+                    تفاوت START با GROWTH چیست؟
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>پکیج START برای کسب‌وکارهایی است که ادمین داخلی دارند. در GROWTH مدیریت کامل پیج، دایرکت، کامنت و انتشار محتوا نیز انجام می‌شود.</p>
+                </div>
+            </div>
+
+            <div class="faq-item fade-up" style="transition-delay: 0.3s;">
+                <div class="faq-question">
+                    آیا مدیریت پیج در همه پکیج‌ها هست؟
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>خیر. مدیریت پیج از پکیج GROWTH به بعد ارائه می‌شود. پکیج START فقط شامل تولید محتوا و استراتژی است.</p>
+                </div>
+            </div>
+
+            <div class="faq-item fade-up" style="transition-delay: 0.4s;">
+                <div class="faq-question">
+                    خدمات پروژه‌ای چه کاربردی دارد؟
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>برای کسب‌وکارهایی که به همکاری مستمر نیاز ندارند و فقط یک خروجی مشخص می‌خواهند.</p>
+                </div>
+            </div>
+
+            <div class="faq-item fade-up" style="transition-delay: 0.5s;">
+                <div class="faq-question">
+                    AI Product Studio چیست؟
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>استودیوی اختصاصی زادمدیا برای تولید تصاویر تبلیغاتی حرفه‌ای محصولات صنعتی با استفاده از هوش مصنوعی.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+        <div class="contact-container">
+            <div class="section-header fade-up">
+                <span class="section-tag">تماس با ما</span>
+                <h2 class="section-title">همیشه <span>در دسترس</span> هستیم</h2>
+                <p class="section-desc">از طریق هر کدام از راه‌های زیر می‌توانید با ما در ارتباط باشید</p>
+            </div>
+
+            <div class="contact-grid">
+                <a href="tel:09991248434" class="contact-card phone fade-up tilt-card">
+                    <div class="contact-icon-wrapper">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3 class="contact-title">مشاوره و پشتیبانی</h3>
+                    <div class="contact-value">09991248434</div>
+                    <div class="contact-label">برای تماس کلیک کنید</div>
+                </a>
+
+                <a href="https://www.instagram.com/zaadmediaa" target="_blank" class="contact-card instagram fade-up tilt-card" style="transition-delay: 0.1s;">
+                    <div class="contact-icon-wrapper">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <h3 class="contact-title">اینستاگرام</h3>
+                    <div class="contact-value">@zaadmediaa</div>
+                    <div class="contact-label">نمونه‌کارها و آخرین اخبار</div>
+                </a>
+
+                <a href="https://t.me/zaaadmedia" target="_blank" class="contact-card telegram fade-up tilt-card" style="transition-delay: 0.2s;">
+                    <div class="contact-icon-wrapper">
+                        <i class="fab fa-telegram-plane"></i>
+                    </div>
+                    <h3 class="contact-title">تلگرام</h3>
+                    <div class="contact-value">@zaaadmedia</div>
+                    <div class="contact-label">پاسخگویی سریع در تلگرام</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="cta-box fade-up">
+            <h2 class="cta-title">نمی‌دانید کدام مسیر برای شما مناسب است؟</h2>
+            <p class="cta-desc">نیاز کسب‌وکار شما را بررسی می‌کنیم و مناسب‌ترین مدل همکاری را پیشنهاد می‌دهیم.</p>
+            <a href="tel:09991248434" class="btn-primary" style="font-size: 16px; padding: 18px 40px;">
+                <i class="fas fa-headset"></i>
+                مشاوره رایگان: 09991248434
+            </a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-logo-wrapper">
+                    <div class="footer-logo-icon"><i class="fas fa-bolt"></i></div>
+                    <div class="footer-logo-text">
+                        <div class="footer-logo-name">Zaad Media</div>
+                        <div class="footer-logo-sub">Digital Marketing Agency</div>
+                    </div>
+                </div>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/zaadmediaa" target="_blank" class="instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://t.me/zaaadmedia" target="_blank" class="telegram"><i class="fab fa-telegram-plane"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-contact-info">
+                <a href="tel:09991248434" class="footer-contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    09991248434
+                </a>
+                <a href="https://www.instagram.com/zaadmediaa" target="_blank" class="footer-contact-item">
+                    <i class="fab fa-instagram"></i>
+                    @zaadmediaa
+                </a>
+                <a href="https://t.me/zaaadmedia" target="_blank" class="footer-contact-item">
+                    <i class="fab fa-telegram-plane"></i>
+                    @zaaadmedia
+                </a>
+            </div>
+
+            <p class="footer-text">© 2024 Zaad Media Ads Agency. تمامی حقوق محفوظ است.</p>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span>شماره تماس کپی شد</span>
+    </div>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                const isActive = item.classList.contains('active');
+                
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Comparison Tabs
+        document.querySelectorAll('.quick-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.quick-card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                
+                const target = card.getAttribute('data-target');
+                document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+                document.getElementById(target).classList.add('active');
+            });
+        });
+
+        // Scroll Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Animate numbers
+                    if (entry.target.querySelector('.stat-number')) {
+                        const counters = entry.target.querySelectorAll('.stat-number');
+                        counters.forEach(counter => {
+                            const target = +counter.getAttribute('data-target');
+                            const duration = 2000;
+                            const increment = target / (duration / 16);
+                            let current = 0;
+                            
+                            const updateCounter = () => {
+                                current += increment;
+                                if (current < target) {
+                                    counter.innerText = Math.ceil(current) + '+';
+                                    requestAnimationFrame(updateCounter);
+                                } else {
+                                    counter.innerText = target + '+';
+                                }
+                            };
+                            updateCounter();
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // 3D Tilt Effect
+        VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
+            max: 15,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.2,
+            scale: 1.02
+        });
+
+        // Particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Toast notification for phone copy
+        document.querySelectorAll('.contact-value, .nav-cta, .hero-buttons a[href^="tel"]').forEach(el => {
+            el.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    const toast = document.getElementById('toast');
+                    toast.classList.add('show');
+                    setTimeout(() => toast.classList.remove('show'), 3000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
